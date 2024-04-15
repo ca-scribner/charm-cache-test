@@ -11,7 +11,12 @@ jobs:
 
     steps:
     - name: Check out code
-      uses: actions/checkout@v3
+      uses: actions/checkout@v4
+
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.8'
+        cache: 'pip' # caching pip dependencies
     
     - name: Refresh LXD dependency
       # if: ${{ matrix.os == 'ubuntu-20.04' }}
@@ -30,18 +35,38 @@ jobs:
       run: |
         sudo snap install charmcraft --classic
 
+    - name: emit pip cache directory contents (1)
+      run: |
+        find /home/scribs/.cache/pip | wc -l
+        find /home/scribs/.cache/pip/wheels | wc -l
+
     - name: pack charm from scratch
       run: |
-        charmcraft clean # to be sure
+        charmcraft clean --verbosity debug # to be sure
         time charmcraft pack --verbosity debug
+
+    - name: emit pip cache directory contents (2)
+      run: |
+        find /home/scribs/.cache/pip | wc -l
+        find /home/scribs/.cache/pip/wheels | wc -l
 
     - name: pack charm from reused container
       run: |
-        # charmcraft clean # to be sure
+        # charmcraft clean --verbosity debug # to be sure
         time charmcraft pack --verbosity debug
+
+    - name: emit pip cache directory contents (3)
+      run: |
+        find /home/scribs/.cache/pip | wc -l
+        find /home/scribs/.cache/pip/wheels | wc -l
 
     - name: pack charm from new container with pip cache
       run: |
-        charmcraft clean # to be sure
+        charmcraft clean --verbosity debug # to be sure
         time charmcraft pack --verbosity debug
+
+    - name: emit pip cache directory contents (4)
+      run: |
+        find /home/scribs/.cache/pip | wc -l
+        find /home/scribs/.cache/pip/wheels | wc -l
 
