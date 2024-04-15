@@ -34,8 +34,17 @@ jobs:
 
     - name: emit pip cache directory contents (1)
       run: |
-        find $PIP_CACHE_DIR | wc -l
-        find $PIP_CACHE_DIR/wheels | wc -l
+        find $CRAFT_SHARED_CACHE | wc -l
+        find $CRAFT_SHARED_CACHE/wheels | wc -l
+
+    - name: pip install something to show we can cache things
+      run: |
+        pip install fastapi --no-binary :all:
+
+    - name: emit pip cache directory contents (1b)
+      run: |
+        find $CRAFT_SHARED_CACHE | wc -l
+        find $CRAFT_SHARED_CACHE/wheels | wc -l
 
     - name: pack charm from scratch
       run: |
@@ -66,3 +75,7 @@ jobs:
       run: |
         find $PIP_CACHE_DIR | wc -l
         find $PIP_CACHE_DIR/wheels | wc -l
+
+    - run: ls -l /home/runner/.cache
+    - run: ls -l $PIP_CACHE_DIR
+
