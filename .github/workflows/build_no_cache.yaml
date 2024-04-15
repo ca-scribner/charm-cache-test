@@ -1,0 +1,44 @@
+name: Build without pip cache configured
+
+on:
+  push:
+
+jobs:
+
+  tests:
+    name: Build the charm
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v3
+    
+    - name: Refresh LXD dependency
+      # if: ${{ matrix.os == 'ubuntu-20.04' }}
+      run: |
+        sudo snap refresh lxd || echo "Cannot refresh LXD dependency, using $(lxd --version)"
+        snap list lxd
+    - name: Configured LXD
+      run: |
+        sudo groupadd --force --system lxd
+        sudo usermod --append --groups lxd $USER
+        sudo snap start lxd
+        sudo lxd waitready --timeout=30
+        sudo lxd init --auto
+
+    - name: install charmcraft
+      run: |
+        sudo snap install charmcraft --classic
+
+    - name: pack charm from scratch
+      run: |
+        charmcraft clean # to be sure
+        time charmcraft pack --verbosity debug
+
+    - name: pack charm from reused container
+      run: |
+        # charmcraft clean # to be sure
+        time charmcraft pack --verbosity debug
+
+    - name: pack charm from new container with pip cache
+      run: |
+        charmcraft clean # to be sure
+        time charmcraft pack --verbosity debug
