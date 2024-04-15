@@ -10,8 +10,9 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    - name: Check out code
-      uses: actions/checkout@v4
+    # (required for setup-python action)
+    - name: create an empty requirements.txt
+      run: touch requirements.txt
 
     - uses: actions/setup-python@v5
       with:
