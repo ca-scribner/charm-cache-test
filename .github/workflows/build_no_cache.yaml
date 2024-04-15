@@ -18,18 +18,7 @@ jobs:
         python-version: '3.8'
         cache: 'pip' # caching pip dependencies
     
-    - name: Refresh LXD dependency
-      # if: ${{ matrix.os == 'ubuntu-20.04' }}
-      run: |
-        sudo snap refresh lxd || echo "Cannot refresh LXD dependency, using $(lxd --version)"
-        snap list lxd
-    - name: Configured LXD
-      run: |
-        sudo groupadd --force --system lxd
-        sudo usermod --append --groups lxd $USER
-        sudo snap start lxd
-        sudo lxd waitready --timeout=30
-        sudo lxd init --auto
+    - uses: canonical/setup-lxd
 
     - name: install charmcraft
       run: |
