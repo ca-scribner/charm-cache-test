@@ -16,6 +16,11 @@ jobs:
         PIP_CACHE_DIR: /home/runner/.cache/pip
         CRAFT_SHARED_CACHE: /home/runner/.cache/pip
 
+    - name: echo to see if variables exist
+      run: |
+        echo PIP_CACHE_DIR: $PIP_CACHE_DIR
+        echo CRAFT_SHARED_CACHE: $CRAFT_SHARED_CACHE
+
     - uses: actions/setup-python@v5
       with:
         python-version: '3.8'
