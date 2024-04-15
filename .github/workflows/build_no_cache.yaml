@@ -18,7 +18,9 @@ jobs:
         python-version: '3.8'
         cache: 'pip' # caching pip dependencies
     
-    - uses: canonical/setup-lxd
+    - uses: canonical/setup-lxd@main
+      with:
+        channel: latest/stable
 
     - name: install charmcraft
       run: |
