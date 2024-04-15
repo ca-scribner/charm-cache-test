@@ -8,13 +8,13 @@ jobs:
   tests:
     name: Build the charm
     runs-on: ubuntu-20.04
+    env:
+      PIP_CACHE_DIR: /home/runner/.cache/pip
+      CRAFT_SHARED_CACHE: /home/runner/.cache/pip
 
     steps:
     - name: Check out code
       uses: actions/checkout@v4
-      env:
-        PIP_CACHE_DIR: /home/runner/.cache/pip
-        CRAFT_SHARED_CACHE: /home/runner/.cache/pip
 
     - uses: actions/setup-python@v5
       with:

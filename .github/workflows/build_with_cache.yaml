@@ -8,18 +8,30 @@ jobs:
   tests:
     name: Build the charm
     runs-on: ubuntu-20.04
+    env:
+      PIP_CACHE_DIR: /home/runner/.cache/pip
+      CRAFT_SHARED_CACHE: /home/runner/.cache/pip
 
     steps:
     - name: Check out code
       uses: actions/checkout@v4
-      env:
-        PIP_CACHE_DIR: /home/runner/.cache/pip
-        CRAFT_SHARED_CACHE: /home/runner/.cache/pip
 
     - name: echo to see if variables exist
       run: |
         echo PIP_CACHE_DIR: $PIP_CACHE_DIR
         echo CRAFT_SHARED_CACHE: $CRAFT_SHARED_CACHE
+        echo ---
+        bash test-env-vars.sh
+
+    - name: echo to see if variables exist (control)
+      run: |
+        echo PIP_CACHE_DIR: $PIP_CACHE_DIR
+        echo CRAFT_SHARED_CACHE: $CRAFT_SHARED_CACHE
+        echo ---
+        bash test-env-vars.sh
+      env:
+        PIP_CACHE_DIR: XXX
+        CRAFT_SHARED_CACHE: YYY
 
     - uses: actions/setup-python@v5
       with:
