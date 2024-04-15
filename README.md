@@ -14,4 +14,4 @@ Next steps are maybe going via tmate to look for the cache dir and figure out wh
 * could try `ENV_VAR=path charmcraft pack ...`
 
 Strangely, when I changed the requirements.txt file [for this run](https://github.com/ca-scribner/charm-cache-test/actions/runs/8695225973/job/23845823082) I thought it would give me a new cache but it did not (still got a cache hit).  I thought it made a SHA from the requirements file.  what happened here?  
-	* they did mention requirements.txt or pyproject.toml.  maybe it takes pyproject first?  ill try that
+	* they did mention requirements.txt or pyproject.toml.  maybe it takes pyproject first?  ill try that  
