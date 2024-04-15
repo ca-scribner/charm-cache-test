@@ -42,3 +42,4 @@ jobs:
       run: |
         charmcraft clean # to be sure
         time charmcraft pack --verbosity debug
+
