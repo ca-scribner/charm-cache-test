@@ -1,4 +1,4 @@
-name: Build without pip cache being saved between runs
+name: Build with pip cache being saved between runs
 
 on:
   push:
@@ -19,8 +19,11 @@ jobs:
     - uses: actions/setup-python@v5
       with:
         python-version: '3.8'
-        # cache: 'pip' # caching pip dependencies
+        cache: 'pip' # caching pip dependencies
     
+    - name: emit pip cache directory
+      run: pip cache dir
+
     - uses: canonical/setup-lxd@main
       with:
         channel: latest/stable
@@ -31,8 +34,8 @@ jobs:
 
     - name: emit pip cache directory contents (1)
       run: |
-        find $CRAFT_SHARED_CACHE | wc -l
-        find $CRAFT_SHARED_CACHE/wheels | wc -l
+        find $PIP_CACHE_DIR | wc -l
+        find $PIP_CACHE_DIR/wheels | wc -l
 
     - name: pack charm from scratch
       run: |
@@ -41,8 +44,8 @@ jobs:
 
     - name: emit pip cache directory contents (2)
       run: |
-        find $CRAFT_SHARED_CACHE | wc -l
-        find $CRAFT_SHARED_CACHE/wheels | wc -l
+        find $PIP_CACHE_DIR | wc -l
+        find $PIP_CACHE_DIR/wheels | wc -l
 
     - name: pack charm from reused container
       run: |
@@ -51,8 +54,8 @@ jobs:
 
     - name: emit pip cache directory contents (3)
       run: |
-        find $CRAFT_SHARED_CACHE | wc -l
-        find $CRAFT_SHARED_CACHE/wheels | wc -l
+        find $PIP_CACHE_DIR | wc -l
+        find $PIP_CACHE_DIR/wheels | wc -l
 
     - name: pack charm from new container with pip cache
       run: |
@@ -61,6 +64,6 @@ jobs:
 
     - name: emit pip cache directory contents (4)
       run: |
-        find $CRAFT_SHARED_CACHE | wc -l
-        find $CRAFT_SHARED_CACHE/wheels | wc -l
+        find $PIP_CACHE_DIR | wc -l
+        find $PIP_CACHE_DIR/wheels | wc -l
 
