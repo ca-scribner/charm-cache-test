@@ -63,10 +63,26 @@ jobs:
         find $CRAFT_SHARED_CACHE | wc -l
         find $CRAFT_SHARED_CACHE/wheels | wc -l
 
+    - name: emit charmcraft's default pip cache
+      run: |
+        ls -la /home/runner/snap/charmcraft/common/cache/charmcraft/ || true
+        ls -la /home/runner/snap/charmcraft/common/cache/charmcraft/charmcraft-buildd-base-v8.0/ || true
+        ls -la /home/runner/snap/charmcraft/common/cache/charmcraft/charmcraft-buildd-base-v8.0/*/pip || true
+        find /home/runner/snap/charmcraft/common/cache/charmcraft/charmcraft-buildd-base-v8.0/*/pip | wc -l || true
+        find /home/runner/snap/charmcraft/common/cache/charmcraft/charmcraft-buildd-base-v8.0/*/pip/wheels | wc -l || true
+
     - name: pack charm from scratch
       run: |
         charmcraft clean --verbosity debug # to be sure
         time charmcraft pack --verbosity debug
+
+    - name: emit charmcraft's default pip cache (after)
+      run: |
+        ls -la /home/runner/snap/charmcraft/common/cache/charmcraft/ || true
+        ls -la /home/runner/snap/charmcraft/common/cache/charmcraft/charmcraft-buildd-base-v8.0/ || true
+        ls -la /home/runner/snap/charmcraft/common/cache/charmcraft/charmcraft-buildd-base-v8.0/*/pip || true
+        find /home/runner/snap/charmcraft/common/cache/charmcraft/charmcraft-buildd-base-v8.0/*/pip | wc -l || true
+        find /home/runner/snap/charmcraft/common/cache/charmcraft/charmcraft-buildd-base-v8.0/*/pip/wheels | wc -l || true
 
     - name: emit pip cache directory contents (2)
       run: |
