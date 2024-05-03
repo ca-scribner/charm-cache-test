@@ -1,0 +1,16 @@
+name: Build with actions/cache directly
+
+on:
+  push:
+
+jobs:
+
+  tests:
+    name: Build the charm
+    runs-on: ubuntu-20.04
+    env:
+      CRAFT_SHARED_CACHE: /home/runner/.cache/shared_charmcraft_cache
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
