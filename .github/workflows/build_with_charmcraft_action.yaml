@@ -1,0 +1,20 @@
+name: Build with charmcraft pack action using cache
+
+on:
+  push:
+
+jobs:
+
+  build:
+    name: Build the charm
+    runs-on: ubuntu-20.04
+    env:
+      PIP_CACHE_DIR: /home/runner/.cache/pip
+      CRAFT_SHARED_CACHE: /home/runner/.cache/pip
+
+    steps:
+    - name: Check out code
+      uses: actions/checkout@v4
+
+    - name: Pack the charm
+      uses: ca-scribner/craft-actions/charmcraft-pack@main
