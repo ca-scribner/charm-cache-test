@@ -17,4 +17,4 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Pack the charm
-      uses: ca-scribner/craft-actions/charmcraft-pack@main
+      uses: ca-scribner/craft-actions/charmcraft-pack@add-charmcraft-pack
